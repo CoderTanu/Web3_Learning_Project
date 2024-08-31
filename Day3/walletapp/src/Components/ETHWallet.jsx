@@ -3,14 +3,15 @@ import {mnemonicToSeedSync} from 'bip39'
 import {useState} from 'react';
 import { Wallet, HDNodeWallet } from "ethers";
 
-export function ETHWallet({mnemonic}){
+export  function ETHWallet({mnemonic}){
     const [currentIndex, setCurrentIndex] = useState(0);
     const [addresses, setAddresses] = useState([]);
 
     return <div>
       <button onClick={async function(){
-   
+       console.log("mnemonic"+mnemonic)
        const seed = await mnemonicToSeedSync(mnemonic);
+       console.log("seed"+seed)
        const derivationPath =`m/44'/60'/${currentIndex}'/0'`;
        const hdNode = HDNodeWallet.fromSeed(seed);
        const child = hdNode.derivePath(derivationPath);
@@ -25,7 +26,7 @@ export function ETHWallet({mnemonic}){
                 Eth - {p}
             </div>)}
             <br></br><br></br>
-            <div><textarea type="text" value={addresses}></textarea></div> 
+            <div><textarea type="text" value={addresses} readOnly></textarea></div> 
             
     </div>
 }
